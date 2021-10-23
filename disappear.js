@@ -7,13 +7,6 @@ class Node {
 }
 
 // a Doubly Linked List has a length, a beginning (= head), an end (= tail)
-class DoublyLinkedList___0 {
-    constructor() {
-        this.length = 0;
-        this.head = null;
-        this.tail = null;
-    }
-}
 
 class DoublyLinkedList {
     constructor(value) {

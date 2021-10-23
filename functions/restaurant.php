@@ -21,6 +21,16 @@ class Restaurant
         echo "</pre>";
     }
 
+    public function setId($restaurant_id): void
+    {
+        $this->restaurant_id = $restaurant_id;
+    }
+
+    public function getId()
+    {
+        return $this->restaurant_id;
+    }
+
     public function setRestaurantName($restaurant_name): void
     {
         $this->restaurant_name = $restaurant_name;
@@ -77,6 +87,28 @@ class Restaurant
         $this->restaurant_name = $row['restaurant_name'];
         $this->restaurant_meal = $row['restaurant_meal'];
         $this->created = $row['created'];
+    }
+
+    public function deleteStatus($restaurant_id): bool
+    {
+        $query = "DELETE FROM " . $this->table_name . " WHERE restaurant_id = ?";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(1, $restaurant_id);
+
+        if (!$stmt->execute()) {
+            $this->showError($stmt);
+            $data = [];
+            $data['response'] = 'false';
+            $data['message'] = 'Unable to delete status';
+            header('Content-Type: application/json');
+            return json_encode($data);
+        }
+        $data = [];
+        $data['response'] = 'true';
+        $data['message'] = 'Status deleted';
+        header('Content-Type: application/json');
+        return json_encode($data);
     }
 
     public function __toString()

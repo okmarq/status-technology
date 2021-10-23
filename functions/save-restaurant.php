@@ -18,3 +18,11 @@ if (isset($_POST['saveRestaurant']) && isset($_POST['restaurantName']) && isset(
         echo "Something went wrong saving your restaurant details in the database";
     }
 }
+
+if (isset($_POST['deleteStatus']) && isset($_POST['restaurantId'])) {
+    if ($restaurant->deleteStatus($_POST['restaurantId'])) {
+        echo "Status deleted";
+    } else {
+        echo "Unable to delete status";
+    }
+}

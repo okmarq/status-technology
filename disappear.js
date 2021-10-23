@@ -158,11 +158,11 @@ let status_1 = new Status("Papa Murphy's Pizza", "Half N Half Medium Original"),
     status_3 = new Status("Kailash Parbat", "Masiu Ramen Large Bowl"),
     status_4 = new Status("Papa Ichiraku Ochan", "Naruto Ichiraku Ramen Regular"),
     status_5 = new Status("Golden Paris Way Restaurant", "Milk of Poppy Clean Cut Opium");
-console.log(status_1);
-console.log(status_2);
-console.log(status_3);
-console.log(status_4);
-console.log(status_5);
+// console.log(status_1);
+// console.log(status_2);
+// console.log(status_3);
+// console.log(status_4);
+// console.log(status_5);
 
 let myDoublyList = new DoublyLinkedList(status_1);
 
@@ -194,16 +194,33 @@ myDoublyList.remove(2);
 
 
 // set 48hrs duration for status display
+// 48 Hours = 172,800,000 Milliseconds
 let statusDisplay;
 
-display48 = window.onload = setTimeout(function () {
-    document.getElementById('status').innerHTML = `displayed`;
+// display3 = window.onload = setTimeout(function () {
+//     document.getElementById('status').innerHTML = `displayed`;
+// }, 0);
 
+// remove3 = window.onload = setTimeout(function () {
+//     document.getElementById('status').innerHTML = `removed`;
+// }, 3000);
+
+display48Hrs = window.onload = setTimeout(function () {
+    document.getElementById('status').innerHTML = `displayed display48Hrs`;
 }, 0);
 
-remove48 = window.onload = setTimeout(function () {
-    document.getElementById('status').innerHTML = `removed`;
-}, 3000);
+remove48Hrs = window.onload = setTimeout(function () {
+    document.getElementById('status').innerHTML = `removed display48Hrs`;
+}, 172800000);
+
+display30Secs = window.onload = setTimeout(function () {
+    document.getElementById('statusView').innerHTML = `displayed display30Secs`;
+}, 0);
+
+remove30Secs = window.onload = setTimeout(function () {
+    document.getElementById('statusView').innerHTML = `removed display30Secs`;
+}, 30000);
+
 // add option to delete status before time elapses
 
 // set 30secs for status view before view closes

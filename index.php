@@ -28,7 +28,33 @@
 
 <body class="container">
     <h1>status Technology</h1>
-    <p id="status"></p>
+
+    <form action="" method="post" id="form">
+        <div>
+            <label for="restaurantName">Restaurant name</label>
+            <input type="text" name="restaurantName" id="restaurantName">
+        </div>
+
+        <div>
+            <label for="restaurantMeal">Restaurant meal</label>
+            <input type="text" name="restaurantMeal" id="restaurantMeal">
+        </div>
+
+        <button type="submit" class="btn btn-outline-primary">Add status</button>
+    </form>
+
+    <div>
+        <p id="id"></p>
+        <p id="name"></p>
+        <p id="meal"></p>
+        <p id="created"></p>
+    </div>
+
+    <div>
+        <p id="status"></p>
+        <p id="statusView"></p>
+    </div>
+
     <section class="">
         <div class="">
             <div class="d-flex flex-column d-grid gap-5 m-5">
@@ -159,6 +185,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+    <script src="./save-restaurant.js"></script>
     <script src="./disappear.js"></script>
 </body>
 

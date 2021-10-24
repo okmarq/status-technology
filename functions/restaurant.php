@@ -4,6 +4,7 @@ class Restaurant
     private $conn;
     protected $table_name = 'restaurant';
 
+    private $restaurant_owner;
     private $restaurant_id;
     private $restaurant_name;
     private $restaurant_meal;
@@ -19,6 +20,16 @@ class Restaurant
         echo "<pre>";
         print_r($stmt->errorInfo());
         echo "</pre>";
+    }
+
+    public function setOwner($restaurant_owner): void
+    {
+        $this->restaurant_owner = $restaurant_owner;
+    }
+
+    public function getOwner()
+    {
+        return $this->restaurant_owner;
     }
 
     public function setId($restaurant_id): void
@@ -72,21 +83,31 @@ class Restaurant
 
     public function readAll()
     {
-        $query = "SELECT * FROM " . $this->table_name . " WHERE restaurant_name = ? and restaurant_meal = ? LIMIT 0,1";
+        $query = "SELECT * FROM " . $this->table_name . " WHERE restaurant_owner = ? LIMIT 0,1";
 
         $stmt = $this->conn->prepare($query);
 
-        $stmt->bindParam(1, $this->restaurant_name);
-        $stmt->bindParam(2, $this->restaurant_meal);
+        $stmt->bindParam(1, $this->restaurant_owner);
 
         $stmt->execute();
 
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
+        $this->restaurant_owner = $row['restaurant_owner'];
         $this->restaurant_id = $row['restaurant_id'];
         $this->restaurant_name = $row['restaurant_name'];
         $this->restaurant_meal = $row['restaurant_meal'];
         $this->created = $row['created'];
+        
+        $data = [];
+        $data['restaurant_owner'] = $this->restaurant_owner;
+        $data['restaurant_id'] = $this->restaurant_id;
+        $data['restaurant_name'] = $this->restaurant_name;
+        $data['restaurant_meal'] = $this->restaurant_meal;
+        $data['created'] = $this->created;
+        $data['status'] = 200;
+        $data['message'] = 'successful';
+        header('Content-Type: application/json');
+        return json_encode($data);
     }
 
     public function deleteStatus($restaurant_id): bool
@@ -114,6 +135,7 @@ class Restaurant
     public function __toString()
     {
         $data = [];
+        $data['restaurant_owner'] = $this->restaurant_owner;
         $data['restaurant_id'] = $this->restaurant_id;
         $data['restaurant_name'] = $this->restaurant_name;
         $data['restaurant_meal'] = $this->restaurant_meal;

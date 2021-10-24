@@ -3,6 +3,7 @@ $(function () {
         event.preventDefault();
 
         let formData = {
+            // restaurantOwner: ''
             restaurantName: $('#restaurantName').val(),
             restaurantMeal: $('#restaurantMeal').val(),
             saveRestaurant: true,
@@ -11,9 +12,22 @@ $(function () {
         $.post('functions/save-restaurant.php', formData, function (response) {
             // return response;
         }, 'json').done(function (response) {
+            // get restaurant details
+            $.get('functions/status.php', function (response) {
+                console.log(response);
+                // console.log(response.restaurant_owner);
+                // console.log(response.restaurant_id);
+                // console.log(response.restaurant_name);
+                // console.log(response.restaurant_meal);
+                // console.log(response.created);
+            }, 'json').done(function (response) {
+                console.log(response);
+            });
+
             // add a status
-            let status_1 = new Status("Papa Murphy's Pizza", "Half N Half Medium Original"),
-                myDoublyList = new DoublyLinkedList(status_1);
+            // if user has status in db, append to old, else push new.
+            let status_1 = new Status(formData.restaurantName, formData.restaurantMeal),
+                myDLL = new DLL(status_1);
 
             // set 30 secs duration for status display
             display30Secs = window.onload = setTimeout(function () {
@@ -34,7 +48,7 @@ $(function () {
                 $.post('functions/save-restaurant.php', { deleteStatus: true, restaurantId: response.restaurant_id }, function (response) {
                     console.log(response.message);
                 }, 'json');
-            }, 30000);
+            }, 172800000);
         });
     });
 });

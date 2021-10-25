@@ -8,7 +8,23 @@ $db = $database->getConnection();
 $restaurant = new Restaurant($db);
 
 $restaurant->setOwner('no one');
-$restaurant->readAll();
+$stmt = $restaurant->readAll();
+$num = $stmt->rowCount();
+
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    extract($row);
+
+    $data[] = array(
+        'restaurant_owner' => $row['restaurant_owner'],
+        'restaurant_id' => $row['restaurant_id'],
+        'restaurant_name' => $row['restaurant_name'],
+        'restaurant_meal' => $row['restaurant_meal'],
+        'created' => strtotime($row['created']),
+    );
+}
+
+header('Content-Type: application/json');
+echo json_encode($data);
 
 if (isset($_POST['deleteStatus']) && isset($_POST['restaurantId'])) {
     if ($restaurant->deleteStatus($_POST['restaurantId'])) {

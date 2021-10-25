@@ -40,22 +40,31 @@
             <input type="text" name="restaurantMeal" id="restaurantMeal">
         </div>
 
-        <button type="submit" class="btn btn-outline-primary">Add status</button>
+        <button type="submit" class="btn btn-outline-success">Add status</button>
     </form>
 
     <div>
+        <p id="response"></p>
+    </div>
+
+    <div>
+        <p id="owner"></p>
         <p id="id"></p>
         <p id="name"></p>
         <p id="meal"></p>
         <p id="created"></p>
+        <p id="expire48Hrs"></p>
+        <p id="expire30Secs"></p>
     </div>
+
+    <button id="viewStatus" type="button" class="btn btn-outline-primary">View all status</button>
 
     <div>
         <p id="status"></p>
         <p id="statusView"></p>
     </div>
 
-    <section class="">
+    <!-- <section class="">
         <div class="">
             <div class="d-flex flex-column d-grid gap-5 m-5">
                 <div class="card shadow-sm rounded-3" style="width: 30rem;">
@@ -179,7 +188,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 

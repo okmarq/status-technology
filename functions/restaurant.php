@@ -81,13 +81,14 @@ class Restaurant
         return true;
     }
 
-    public function readAll()
+    public function readOne()
     {
-        $query = "SELECT * FROM " . $this->table_name . " WHERE restaurant_owner = ? LIMIT 0,1";
+        $query = "SELECT * FROM " . $this->table_name . " WHERE restaurant_name = ? and restaurant_meal = ? LIMIT 0,1";
 
         $stmt = $this->conn->prepare($query);
 
-        $stmt->bindParam(1, $this->restaurant_owner);
+        $stmt->bindParam(1, $this->restaurant_name);
+        $stmt->bindParam(2, $this->restaurant_meal);
 
         $stmt->execute();
 
@@ -97,17 +98,30 @@ class Restaurant
         $this->restaurant_name = $row['restaurant_name'];
         $this->restaurant_meal = $row['restaurant_meal'];
         $this->created = $row['created'];
-        
-        $data = [];
-        $data['restaurant_owner'] = $this->restaurant_owner;
-        $data['restaurant_id'] = $this->restaurant_id;
-        $data['restaurant_name'] = $this->restaurant_name;
-        $data['restaurant_meal'] = $this->restaurant_meal;
-        $data['created'] = $this->created;
-        $data['status'] = 200;
-        $data['message'] = 'successful';
+
+        $data[] = array(
+            'restaurant_owner' => $row['restaurant_owner'],
+            'restaurant_id' => $row['restaurant_id'],
+            'restaurant_name' => $row['restaurant_name'],
+            'restaurant_meal' => $row['restaurant_meal'],
+            'created' => strtotime($row['created']),
+        );
+
         header('Content-Type: application/json');
         return json_encode($data);
+    }
+
+    public function readAll()
+    {
+        $query = "SELECT * FROM " . $this->table_name . " WHERE restaurant_owner = ?";
+
+        $stmt = $this->conn->prepare($query);
+
+        $stmt->bindParam(1, $this->restaurant_owner);
+
+        $stmt->execute();
+
+        return $stmt;
     }
 
     public function deleteStatus($restaurant_id): bool

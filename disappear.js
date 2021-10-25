@@ -43,7 +43,6 @@ class DoublyLinkedList {
                 }
             } else {
                 let counter = this.length - 1;
-
                 currentNode = this.tail;
 
                 while (counter > index) {
@@ -51,7 +50,6 @@ class DoublyLinkedList {
                     counter -= 1;
                 }
             }
-
             return currentNode;
         }
     }

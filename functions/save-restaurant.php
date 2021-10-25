@@ -12,9 +12,7 @@ if (isset($_POST['saveRestaurant']) && isset($_POST['restaurantName']) && isset(
     $restaurant->setRestaurantMeal($_POST['restaurantMeal']);
 
     if ($restaurant->saveRestaurant()) {
-        $restaurant->setOwner('no one');
-        $restaurant->readAll();
-        echo $restaurant;
+        echo $restaurant->readOne();
     } else {
         echo "Something went wrong saving your restaurant details in the database";
     }

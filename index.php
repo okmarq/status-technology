@@ -32,29 +32,28 @@
     <form action="" method="post" id="form">
         <div>
             <label for="restaurantName">Restaurant name</label>
-            <input type="text" name="restaurantName" id="restaurantName">
+            <input type="text" name="restaurantName" id="restaurantName" required>
         </div>
 
         <div>
             <label for="restaurantMeal">Restaurant meal</label>
-            <input type="text" name="restaurantMeal" id="restaurantMeal">
+            <input type="text" name="restaurantMeal" id="restaurantMeal" required>
         </div>
 
-        <button type="submit" class="btn btn-outline-success">Add status</button>
+        <button type="submit" class="btn btn-sm btn-outline-success">Add status</button>
     </form>
 
-    <div>
-        <p id="response"></p>
-    </div>
+    <div id="response"></div>
 
     <div id="allStatus"></div>
 
-    <button id="viewStatus" type="button" class="btn btn-outline-primary">View all status</button>
+    <button id="viewStatus" type="button" class="btn btn-sm btn-outline-primary">View status</button>
 
-    <div>
-        <p id="status"></p>
-        <p id="statusView"></p>
-    </div>
+    <div id="traverse"></div>
+
+    <div id="statusView"></div>
+
+    <div id="status"></div>
 
     <!-- <section class="">
         <div class="">

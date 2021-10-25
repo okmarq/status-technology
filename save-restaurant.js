@@ -1,6 +1,7 @@
 $(function () {
     // init list for global access.
-    const newDLL = new DoublyLinkedList();
+    const newDLLPushFront = new DoublyLinkedList();
+    const newDLLPushFront_2 = new DoublyLinkedList();
 
     $('#form').submit(function (event) {
         event.preventDefault();
@@ -14,7 +15,7 @@ $(function () {
 
         $.post('functions/save-restaurant.php', formData, function (response) {
             $("#response").html('successfully submitted');
-
+        }, 'json').done(function () {
             $('#owner').html(response[0].restaurant_owner);
             $('#id').html(response[0].restaurant_id);
             $('#name').html(response[0].restaurant_name);
@@ -22,32 +23,6 @@ $(function () {
             $('#created').html(response[0].created);
             $('#expire48Hrs').html(response[0].created + 172800000);
             $('#expire30Secs').html(response[0].created + 30000);
-
-        }, 'json').done(function () {
-            let jqxhr = $.get('functions/status.php', function () {
-                $("#response").html('successfully received');
-            }, 'json').done(function (response) {
-                // add a status
-                $.each(response, function (key, value) {
-
-                    // if user has status in db, append to old, else push new
-                    const status = new Status(value.restaurant_name, value.restaurant_meal);
-
-                    newDLL.push([status, value.restaurant_owner, value.restaurant_id, value.created, value.created + 172800000, value.created + 30000]);
-
-
-                    $("#allStatus").append(`<div class='small'>
-                        <p class="owner">${value.restaurant_owner}</p>
-                        <p class="id">${value.restaurant_name}</p>
-                        <p class="name">${value.restaurant_meal}</p>
-                        <p class="meal">${value.restaurant_id}</p>
-                        <p class="created">${value.created}</p>
-                        <p class="expire48Hrs">${value.created + 172800000}</p>
-                        <p class="expire30Secs">${value.created + 30000}</p>
-                        <button id='${value.restaurant_id}' type="button" class="btn btn-outline-primary">View status</button>
-                    </div>`);
-                });
-            });
         });
     });
 
@@ -59,84 +34,114 @@ $(function () {
             // display each status
             $.each(response, function (key, value) {
                 const status = new Status(value.restaurant_name, value.restaurant_meal);
-                // add a status to list
-                newDLL.push([status, value.restaurant_owner, value.restaurant_id, value.created, value.created + 172800000, value.created + 30000]);
+
+                // add a status to end of list
+                newDLLPushFront.push([status, value.restaurant_owner, value.restaurant_id, value.created, value.created + 172800000, value.created + 30000]);
+
+                newDLLPushFront_2.push([status, value.restaurant_owner, value.restaurant_id, value.created, value.created + 172800000, value.created + 30000]);
 
                 $("#status").append(`<div class='small'>
                     <p class="name">name: ${value.restaurant_name}</p>
                     <p class="meal">meal: ${value.restaurant_meal}</p>
                     <p class="id">id: ${value.restaurant_id}</p>
-                    
-                    <a id="${newDLL.length - 1}" class="dll btn btn-sm btn-primary">traverse</a>
                 </div>`);
             });
+
+            $("#traverse").html(`<a id="${newDLLPushFront.length - 1}" class="traverse btn btn-sm btn-primary">traverse</a>`);
+
             $("#viewStatus").hide();
 
-            $('.dll').click(function () {
-                let id = $(this).attr('id');
-                // console.log(newDLL.get(id-1));
-                // console.log(newDLL.get(id-1).value);
+            $('.traverse').click(function () {
+                let id = 0;
 
                 $("#statusView").html(`
                 <div class='small'>
                 <div id='show'></div>
+                <div id='hide'></div>
                 <button class='prev'>prev</button>
                 <button class='next'>next</button>
                 </div>
                 `);
-                show(id);
+                show30(id);
 
                 $('.prev').click(function () {
                     --id;
-                    if (id < 0) {
-                        id = newDLL.length - 1;
-                    } else if (id > newDLL.length - 1) {
-                        id = 0;
+                    if (id > newDLLPushFront.length - 1) {
+                        id = newDLLPushFront.length - 2;
+                        show30(id);
+                        return;
                     }
-                    show(id);
+                    show30(id);
                 });
                 $('.next').click(function () {
                     ++id;
-                    if (id < 0) {
-                        id = newDLL.length - 1;
-                    } else if (id > newDLL.length - 1) {
-                        id = 0;
+                    if (id > newDLLPushFront.length - 1) {
+                        id = newDLLPushFront.length;
+                        // click double next for next user's status where if this status is for the last user in the list exit the modal completely
+                        return;
                     }
-                    show(id);
+                    show30(id);
                 });
             });
         });
 
-        // jqxhr.always(function () {
-        //     let currentSecs = new Date();
-        //     let expire48Hrs = response.created + 172800000;
-        //     let expire30Secs = response.created + 30000;
-        //     // set 30 secs duration for status display
-        //     display30Secs = window.onload = setTimeout(function () {
-        //         document.getElementById('statusView').innerHTML = `displayed display30Secs`;
-        //         $("#id").html('id: ' + response.restaurant_id);
-        //         $("#name").html('name: ' + response.restaurant_name);
-        //         $("#meal").html('meal: ' + response.restaurant_meal);
-        //         $("#created").html('created: ' + response.created);
-        //     }, 0);
+        jqxhr.always(function (response) {
+            let dateNow = new Date(), expire48Hrs, restaurant_id;
 
-        //     // delete 30secs status from database after 30 secs
-        //     remove30Secs = window.onload = setTimeout(function () {
-        //         document.getElementById('statusView').innerHTML = `removed display30Secs`;
-        //         $("#id").html('');
-        //         $("#name").html('');
-        //         $("#meal").html('');
-        //         $("#created").html('');
-        //         $.post('functions/save-restaurant.php', { deleteStatus: true, restaurantId: response.restaurant_id }, function (response) {
-        //             console.log(response.message);
-        //         }, 'json');
-        //     }, 172800000);
-        // });
+            $.each(response, function (key, value) {
+                expire48Hrs = value.created + 172800000;
+                restaurant_id = value.restaurant_id;
+
+                if (dateNow > expire48Hrs) {
+                    del48(value.restaurant_id);
+                } else {
+                    // don't delete or find a way to loop this check without overloading client and server
+                    check1Hour(value.restaurant_id);
+                }
+            });
+
+            function del48(restaurant_id) {
+                $.post('functions/save-restaurant.php', { deleteStatus: true, restaurantId: restaurant_id }, function (response) {
+                    console.log(response.message);
+                }, 'json');
+            }
+
+            function check1Hour(restaurant_id) {
+                setTimeout(function () {
+                    if (dateNow > expire48Hrs) {
+                        $.post('functions/save-restaurant.php', { deleteStatus: true, restaurantId: restaurant_id }, function (response) {
+                            console.log(response.message);
+                        }, 'json');
+                        return;
+                    }
+                }, 0);
+
+                setTimeout(function () {
+                    check1Hour(restaurant_id);
+                    // check every 1 hour
+                }, 3600000);
+            }
+        });
     });
-    function show(index) {
-        $("#show").html(
-            `<p class="name">name: ${newDLL.get(index).value[0].restaurant_name}</p>
-            <p class="meal">meal: ${newDLL.get(index).value[0].restaurant_meal}</p>`
-        );
+    function show30(index) {
+        setTimeout(function () {
+            // display the status starting from the first for 30  secs
+            $("#show").html(
+                `<p class="name">name: ${newDLLPushFront.get(index).value[0].restaurant_name}</p>
+                <p class="meal">meal: ${newDLLPushFront.get(index).value[0].restaurant_meal}</p>`
+            );
+            $("#hide").html(index);
+        }, 0);
+
+        setTimeout(function () {
+            // shift the node from the top and push to bottom
+            newDLLPushFront.unshift(newDLLPushFront.shift().value);
+            console.log(newDLLPushFront.get(index).value);
+            $('.next').click();
+            // when we get to newDLLPushFront.length, stop traversing
+        }, 1000);
     }
 });
+
+// console.log('traversing ended');
+// console.log("if other users have unseen status, begin traversing, but i doubt it will be inplemented here, instead, for each owner's status, put all status in a list in their order and loop, also on major next skip owner's status");

@@ -27,6 +27,7 @@ class DoublyLinkedList {
         this.tail = null;
     }
 
+    // get a specific node
     get(index) {
         if (!this.length || index < 0 || index >= this.length) {
             return null;
@@ -54,6 +55,7 @@ class DoublyLinkedList {
         }
     }
 
+    // add a node to the end
     push(value) {
         const newNode = new Node(value);
 
@@ -69,6 +71,7 @@ class DoublyLinkedList {
         return newNode;
     }
 
+    // remove a node from the end
     pop() {
         if (!this.length) {
             return null;
@@ -86,6 +89,46 @@ class DoublyLinkedList {
             this.length -= 1;
             return nodeToRemove;
         }
+    }
+
+    // add a node to the beginning
+    unshift(value) {
+        const newNode = new Node(value);
+
+        if (!this.length) {
+            this.head = newNode;
+            this.tail = newNode;
+        } else {
+            newNode.next = this.head;
+            this.head.prev = newNode;
+            this.head = newNode;
+        }
+
+        this.length += 1;
+
+        return newNode;
+    }
+
+    // remove a node from the beginning
+    shift() {
+        if (!this.length) {
+            return null;
+        }
+
+        const nodeToRemove = this.head;
+
+        if (this.length === 1) {
+            this.head = null;
+            this.tail = null;
+        } else {
+            this.head = nodeToRemove.next;
+            this.head.prev = null;
+            nodeToRemove.next = null;
+        }
+
+        this.length -= 1;
+
+        return nodeToRemove;
     }
 
     remove(index) {
@@ -124,73 +167,3 @@ class DoublyLinkedList {
     //     return this;
     // }
 }
-// const newDLL = new DoublyLinkedList();
-// console.log(newDLL.push(status_1));
-// console.log(newDLL.push(status_2));
-// console.log(newDLL.push(status_3));
-// console.log(newDLL);
-// console.log(newDLL.pop());
-// console.log(newDLL);
-
-// console.log(status_1);
-// console.log(status_2);
-// console.log(status_3);
-// console.log(status_4);
-// console.log(status_5);
-
-
-// set 48hrs duration for status display
-// 48 Hours = 172,800,000 Milliseconds
-// let statusDisplay;
-
-// display3Secs = window.onload = setTimeout(function () {
-//     document.getElementById('status').innerHTML = `displayed`;
-// }, 0);
-
-// remove3Secs = window.onload = setTimeout(function () {
-//     document.getElementById('status').innerHTML = `removed`;
-// }, 3000);
-
-// display48Hrs = window.onload = setTimeout(function () {
-//     document.getElementById('status').innerHTML = `displayed display48Hrs`;
-// }, 0);
-
-// remove48Hrs = window.onload = setTimeout(function () {
-//     document.getElementById('status').innerHTML = `removed display48Hrs`;
-// }, 172800000);
-
-// display30Secs = window.onload = setTimeout(function () {
-//     document.getElementById('statusView').innerHTML = `displayed display30Secs`;
-// }, 0);
-
-// remove30Secs = window.onload = setTimeout(function () {
-//     document.getElementById('statusView').innerHTML = `removed display30Secs`;
-// }, 30000);
-
-// add option to delete status before time elapses
-
-// set 30secs for status view before view closes
-
-// let time = new Date(),
-//     currentHour = time.getHours(),
-//     currentSec = time.getSeconds(),
-//     // start time
-//     start48Hrs = currentHour,
-//     start30Secs = currentSec,
-//     // end time
-//     end48Hrs = 48,
-//     end30Secs = 30;
-
-// if (start48Hrs < 48) {
-//     // keep status displayed
-// }
-// else {
-//     // delete the status
-// }
-
-// if (start30Secs < 30) {
-//     // keep status in view
-// }
-// else {
-//     // remove the status from view
-// }

@@ -36,7 +36,7 @@ $(function () {
                     newDLL.push([status, value.restaurant_owner, value.restaurant_id, value.created, value.created + 172800000, value.created + 30000]);
 
 
-                    $("#status").append(`<div class='small'>
+                    $("#allStatus").append(`<div class='small'>
                         <p class="owner">${value.restaurant_owner}</p>
                         <p class="id">${value.restaurant_name}</p>
                         <p class="name">${value.restaurant_meal}</p>
@@ -70,11 +70,10 @@ $(function () {
                     <a id="${newDLL.length - 1}" class="dll btn btn-sm btn-primary">traverse</a>
                 </div>`);
             });
+            $("#viewStatus").hide();
 
             $('.dll').click(function () {
                 let id = $(this).attr('id');
-                console.log('id: ' + id);
-                console.log(newDLL.get(id).value);
                 // console.log(newDLL.get(id-1));
                 // console.log(newDLL.get(id-1).value);
 
@@ -88,24 +87,22 @@ $(function () {
                 show(id);
 
                 $('.prev').click(function () {
+                    --id;
                     if (id < 0) {
                         id = newDLL.length - 1;
                     } else if (id > newDLL.length - 1) {
                         id = 0;
                     }
                     show(id);
-                    --id;
-                    console.log(id + ' id now');
                 });
                 $('.next').click(function () {
+                    ++id;
                     if (id < 0) {
                         id = newDLL.length - 1;
                     } else if (id > newDLL.length - 1) {
                         id = 0;
                     }
                     show(id);
-                    ++id;
-                    console.log(id + ' id now');
                 });
             });
         });

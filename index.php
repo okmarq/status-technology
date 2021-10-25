@@ -47,15 +47,7 @@
         <p id="response"></p>
     </div>
 
-    <div>
-        <p id="owner"></p>
-        <p id="id"></p>
-        <p id="name"></p>
-        <p id="meal"></p>
-        <p id="created"></p>
-        <p id="expire48Hrs"></p>
-        <p id="expire30Secs"></p>
-    </div>
+    <div id="allStatus"></div>
 
     <button id="viewStatus" type="button" class="btn btn-outline-primary">View all status</button>
 

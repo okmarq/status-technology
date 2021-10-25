@@ -97,7 +97,7 @@ class Restaurant
         $this->restaurant_id = $row['restaurant_id'];
         $this->restaurant_name = $row['restaurant_name'];
         $this->restaurant_meal = $row['restaurant_meal'];
-        $this->created = $row['created'];
+        $this->created = strtotime($row['created']);
 
         $data[] = array(
             'restaurant_owner' => $row['restaurant_owner'],

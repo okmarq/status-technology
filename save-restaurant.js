@@ -16,13 +16,11 @@ $(function () {
         $.post('functions/save-restaurant.php', formData, function (response) {
             $("#response").html('successfully submitted');
         }, 'json').done(function () {
-            $('#owner').html(response[0].restaurant_owner);
-            $('#id').html(response[0].restaurant_id);
-            $('#name').html(response[0].restaurant_name);
-            $('#meal').html(response[0].restaurant_meal);
-            $('#created').html(response[0].created);
-            $('#expire48Hrs').html(response[0].created + 172800000);
-            $('#expire30Secs').html(response[0].created + 30000);
+            // $('#owner').html(response[0].restaurant_owner);
+            // $('#id').html(response[0].restaurant_id);
+            // $('#name').html(response[0].restaurant_name);
+            // $('#meal').html(response[0].restaurant_meal);
+            // $('#created').html(response[0].created);
         });
     });
 
@@ -36,9 +34,9 @@ $(function () {
                 const status = new Status(value.restaurant_name, value.restaurant_meal);
 
                 // add a status to end of list
-                newDLLPushFront.push([status, value.restaurant_owner, value.restaurant_id, value.created, value.created + 172800000, value.created + 30000]);
+                newDLLPushFront.push([status, value.restaurant_owner, value.restaurant_id, value.created]);
 
-                newDLLPushFront_2.push([status, value.restaurant_owner, value.restaurant_id, value.created, value.created + 172800000, value.created + 30000]);
+                newDLLPushFront_2.push([status, value.restaurant_owner, value.restaurant_id, value.created]);
 
                 $("#status").append(`<div class='small'>
                     <p class="name">name: ${value.restaurant_name}</p>
@@ -86,16 +84,24 @@ $(function () {
         });
 
         jqxhr.always(function (response) {
-            let dateNow = new Date(), expire48Hrs, restaurant_id;
+            let date = new Date(),
+                sec = Math.floor(date.getTime()/1000),
+                expire48Hrs,
+                restaurant_id;
 
             $.each(response, function (key, value) {
                 expire48Hrs = value.created + 172800000;
                 restaurant_id = value.restaurant_id;
 
-                if (dateNow > expire48Hrs) {
+                console.log('created: ' + value.created);
+                console.log('sec: ' + sec);
+                console.log('expire48Hrs: ' + expire48Hrs);
+                if (sec > expire48Hrs) {
+                    console.log('1st del48 run');
                     del48(value.restaurant_id);
                 } else {
                     // don't delete or find a way to loop this check without overloading client and server
+                    console.log('1st check1Hour run');
                     check1Hour(value.restaurant_id);
                 }
             });
@@ -108,18 +114,22 @@ $(function () {
 
             function check1Hour(restaurant_id) {
                 setTimeout(function () {
-                    if (dateNow > expire48Hrs) {
+                    if (sec > expire48Hrs) {
+                        console.log('inside check1Hour, 1st timeout run');
                         $.post('functions/save-restaurant.php', { deleteStatus: true, restaurantId: restaurant_id }, function (response) {
                             console.log(response.message);
                         }, 'json');
                         return;
                     }
+                    console.log('inside check1Hour, but outside 1st timeout conditional run');
                 }, 0);
 
                 setTimeout(function () {
+                    console.log('inside check1Hour, 2nd timeout run');
                     check1Hour(restaurant_id);
                     // check every 1 hour
                 }, 3600000);
+                // 
             }
         });
     });

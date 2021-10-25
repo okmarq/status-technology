@@ -134,13 +134,11 @@ class Restaurant
         if (!$stmt->execute()) {
             $this->showError($stmt);
             $data = [];
-            $data['response'] = 'false';
             $data['message'] = 'Unable to delete status';
             header('Content-Type: application/json');
             return json_encode($data);
         }
         $data = [];
-        $data['response'] = 'true';
         $data['message'] = 'Status deleted';
         header('Content-Type: application/json');
         return json_encode($data);

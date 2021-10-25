@@ -28,15 +28,7 @@ $(function () {
                 $("#response").html('successfully received');
             }, 'json').done(function (response) {
                 // add a status
-                newDLL = new DoublyLinkedList();
                 $.each(response, function (key, value) {
-                    // console.log(value.restaurant_owner);
-                    // console.log(value.restaurant_id);
-                    // console.log(value.restaurant_name);
-                    // console.log(value.restaurant_meal);
-                    // console.log(value.created);
-                    // console.log(value.created + 172800000);
-                    // console.log(value.created + 30000);
 
                     // if user has status in db, append to old, else push new
                     const status = new Status(value.restaurant_name, value.restaurant_meal);
@@ -55,34 +47,7 @@ $(function () {
                         <button id='${value.restaurant_id}' type="button" class="btn btn-outline-primary">View status</button>
                     </div>`);
                 });
-                console.log(newDLL);
             });
-
-            // jqxhr.always(function () {
-            //     let currentSecs = new Date();
-            //     let expire48Hrs = response.created + 172800000;
-            //     let expire30Secs = response.created + 30000;
-            //     // set 30 secs duration for status display
-            //     display30Secs = window.onload = setTimeout(function () {
-            //         document.getElementById('statusView').innerHTML = `displayed display30Secs`;
-            //         $("#id").html('id: ' + response.restaurant_id);
-            //         $("#name").html('name: ' + response.restaurant_name);
-            //         $("#meal").html('meal: ' + response.restaurant_meal);
-            //         $("#created").html('created: ' + response.created);
-            //     }, 0);
-
-            //     // delete 30secs status from database after 30 secs
-            //     remove30Secs = window.onload = setTimeout(function () {
-            //         document.getElementById('statusView').innerHTML = `removed display30Secs`;
-            //         $("#id").html('');
-            //         $("#name").html('');
-            //         $("#meal").html('');
-            //         $("#created").html('');
-            //         $.post('functions/save-restaurant.php', { deleteStatus: true, restaurantId: response.restaurant_id }, function (response) {
-            //             console.log(response.message);
-            //         }, 'json');
-            //     }, 172800000);
-            // });
         });
     });
 
@@ -143,37 +108,6 @@ $(function () {
                     console.log(id + ' id now');
                 });
             });
-
-            let prev,
-                prevValue,
-                current,
-                currentValue,
-                next,
-                nextValue;
-
-            // console.log('prev: ' + prev + ' = prev value: ' + prevValue);
-
-            // console.log('current: ' + current + ' =  current value: ' + currentValue);
-
-            // console.log('next: ' + next + ' = next value: ' + nextValue);
-
-            // console.log(newDLL);
-            // console.log(newDLL.get(index));
-            // console.log(newDLL.get(index).value);
-
-            // $('.dll').click(function () {
-            //     prev = '';
-            //     prevValue = '';
-            //     current = '';
-            //     currentValue = '';
-            //     next = '';
-            //     nextValue = '';
-
-            //     let id = $(this).attr('id');
-            //     console.log(id);
-
-
-            // });
         });
 
         // jqxhr.always(function () {

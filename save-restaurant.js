@@ -85,7 +85,7 @@ $(function () {
 
         jqxhr.always(function (response) {
             let date = new Date(),
-                sec = Math.floor(date.getTime()/1000),
+                sec = Math.floor(date.getTime() / 1000),
                 expire48Hrs,
                 restaurant_id;
 
@@ -151,6 +151,23 @@ $(function () {
             // when we get to newDLLPushFront.length, stop traversing
         }, 1000);
     }
+
+    let progressBar = 0;
+
+    $("#progressBar").click(function () {
+        setTimeout(function () {
+            progressBar++;
+
+            if (progressBar <= 100) {
+                $("#progressBar").html(`
+        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="${progressBar}" aria-valuemin="0" aria-valuemax="100" style="width: ${progressBar}%"></div>
+        `);
+                $("#progressBar").click();
+            }
+        }, 500);
+
+        console.log(progressBar);
+    });
 });
 
 // console.log('traversing ended');

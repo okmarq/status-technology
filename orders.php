@@ -22,11 +22,15 @@
 </head>
 
 <body>
-
-
-
 	<section class="my-5">
 		<div class="container">
+			<div class="mb-5">
+				<div id="progressBar" class="progress" style="height: 10px;">
+					<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="7" aria-valuemin="0" aria-valuemax="100" style="width: 7%"></div>
+				</div>
+				<!-- <button class="btn btn-sm btn-primary" id="progressBar">Progress</button> -->
+			</div>
+
 			<div class="row justify-content-center">
 				<div class="col-12 col-lg-6">
 					<div class="bg-white shadow-sm border rounded">
@@ -87,6 +91,11 @@
 	</section>
 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script src="./disappear.js"></script>
+    <script src="./save-restaurant.js"></script>
 </body>
 
 </html>

@@ -5,12 +5,13 @@ spl_autoload_register(function ($class_name) {
 
 $database = new Database();
 $db = $database->getConnection();
-$restaurant = new Restaurant($db);
+$status = new Status($db);
 
-if (isset($_POST['save_restaurant']) && isset($_POST['restaurant_name'])) {
-    $restaurant->setName($_POST['restaurant_name']);
+if (isset($_POST['save_status']) && isset($_POST['restaurant_id']) && isset($_POST['status'])) {
+    $status->setName($_POST['status']);
+    $status->setRestaurantId($_POST['restaurant_id']);
 
-    if ($restaurant->save()) {
+    if ($status->save()) {
         $response = array('success' => true);
 
         header('Content-Type: application/json');
@@ -25,10 +26,10 @@ if (isset($_POST['save_restaurant']) && isset($_POST['restaurant_name'])) {
     }
 }
 
-if (isset($_POST['delete_restaurant']) && isset($_POST['restaurant_id'])) {
-    if ($restaurant->deleteRestaurant($_POST['restaurant_id'])) {
-        echo "Restaurant deleted";
+if (isset($_POST['delete_status']) && isset($_POST['status_id'])) {
+    if ($status->deleteStatus($_POST['status_id'])) {
+        echo "Status deleted";
     } else {
-        echo "Unable to delete restaurant";
+        echo "Unable to delete status";
     }
 }

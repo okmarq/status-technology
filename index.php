@@ -24,27 +24,57 @@
             font-size: .6rem;
         }
     </style>
+
+    <?php
+    spl_autoload_register(function ($class_name) {
+        require_once 'functions/' . $class_name . '.php';
+    });
+
+    $database = new Database();
+    $db = $database->getConnection();
+    $restaurant = new Restaurant($db);
+    ?>
 </head>
 
 <body class="container">
-    <form class="row my-3" method="post" id="restaurant-form">
+    <form id="restaurant-form" class="row my-3" method="post">
         <div class="input-group">
             <input id="restaurant" type="text" class="form-control form-control-sm" placeholder="Restaurant's name" aria-label="Restaurant's name" aria-describedby="save-restaurant" required>
 
-            <button class="btn btn-outline-success" type="button" id="save-restaurant">Button</button>
+            <button class="btn btn-outline-success" type="submit">Save</button>
         </div>
 
-        <div class="small" id="restaurantResponse">fail</div>
+        <div id="restaurant-response" class="small"></div>
     </form>
 
-    <form class="row my-5" method="post" id="status-form">
+    <form id="status-form" class="row my-5" method="post">
         <div class="input-group">
             <input id="status" type="text" class="form-control form-control-sm" placeholder="Status" aria-label="Status" aria-describedby="save-status" required>
 
-            <button class="btn btn-outline-primary" type="button" id="save-status">Button</button>
+            <select id="restaurant-id" class="form-select form-select-sm" aria-label="Select your restaurant from the list">
+                <option selected>Choose...</option>
+
+                <?php
+                $stmt = $restaurant->readAll();
+                $num = $stmt->rowCount();
+
+                if ($num > 0) {
+                    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                        extract($row);
+
+                        echo "<option value='{$id}'>{$name}</option>";
+                    }
+                } else {
+                    echo "<option>No restaurant found</option>";
+                }
+                ?>
+            </select>
+
+            <button class="btn btn-outline-primary" type="submit">Save</button>
+
         </div>
 
-        <div class="small" id="statusResponse">success</div>
+        <div id="status-response" class="small"></div>
     </form>
 
     <div class="d-flex flex-wrap">

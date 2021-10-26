@@ -25,6 +25,11 @@ class Restaurant
         $this->name = $name;
     }
 
+    public function setId($id): void
+    {
+        $this->id = $id;
+    }
+
     public function save(): bool
     {
         $query = "INSERT INTO " . $this->table_name . " SET name = :name";
@@ -76,11 +81,9 @@ class Restaurant
 
     public function readAll()
     {
-        $query = "SELECT * FROM " . $this->table_name . " WHERE restaurant_owner = ?";
+        $query = "SELECT * FROM " . $this->table_name . "";
 
         $stmt = $this->conn->prepare($query);
-
-        $stmt->bindParam(1, $this->restaurant_owner);
 
         $stmt->execute();
 

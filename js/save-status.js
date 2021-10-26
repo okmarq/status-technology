@@ -1,28 +1,39 @@
 $(function () {
-    // init list for global access.
-    const newDLLPushFront = new DoublyLinkedList();
-    const newDLLPushFront_2 = new DoublyLinkedList();
-
-    $('#form').submit(function (event) {
+    $('#status-form').submit(function (event) {
         event.preventDefault();
 
         let formData = {
-            // restaurantOwner: ''
-            restaurantName: $('#restaurantName').val(),
-            restaurantMeal: $('#restaurantMeal').val(),
-            saveRestaurant: true,
+            restaurant_id: $('#restaurant-id').val(),
+            status: $('#status').val(),
+            save_status: true,
         };
 
-        $.post('functions/save-restaurant.php', formData, function (response) {
-            $("#response").html('successfully submitted');
-        }, 'json').done(function () {
-            // $('#owner').html(response[0].restaurant_owner);
-            // $('#id').html(response[0].restaurant_id);
-            // $('#name').html(response[0].restaurant_name);
-            // $('#meal').html(response[0].restaurant_meal);
-            // $('#created').html(response[0].created);
+        let saveStatus = $.post('functions/save-status.php', formData, function (response) {
+
+        }, 'json').done(function (response) {
+            if (!response.success) {
+                console.log(response);
+                
+                return $("#status-response").html("<span class='text-danger'>submit unsuccessful</span>");
+            }
+
+            console.log(response);
+
+            return $("#status-response").html("<span class='text-success'>submit successful</span>");
+        }).fail(function (error) {
+            console.error(error);
+
+            return $("#status-response").html("<span class='text-info'>something went wrong, try later</span>");
+        });
+
+        saveStatus.always(function (response) {
+            console.log(response);
         });
     });
+
+    // init list for global access.
+    const newDLLPushFront = new DoublyLinkedList();
+    const newDLLPushFront_2 = new DoublyLinkedList();
 
     $("#viewStatus").click(function (data) {
         // if user has status in db get all,

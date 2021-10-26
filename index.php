@@ -27,7 +27,155 @@
 </head>
 
 <body class="container">
-    <h1>status Technology</h1>
+    <form class="row my-3" method="post" id="restaurant-form">
+        <div class="input-group">
+            <input id="restaurant" type="text" class="form-control form-control-sm" placeholder="Restaurant's name" aria-label="Restaurant's name" aria-describedby="save-restaurant" required>
+
+            <button class="btn btn-outline-success" type="button" id="save-restaurant">Button</button>
+        </div>
+
+        <div class="small" id="restaurantResponse">fail</div>
+    </form>
+
+    <form class="row my-5" method="post" id="status-form">
+        <div class="input-group">
+            <input id="status" type="text" class="form-control form-control-sm" placeholder="Status" aria-label="Status" aria-describedby="save-status" required>
+
+            <button class="btn btn-outline-primary" type="button" id="save-status">Button</button>
+        </div>
+
+        <div class="small" id="statusResponse">success</div>
+    </form>
+
+    <div class="d-flex flex-wrap">
+        <div class="flex-fill row justify-content-center my-5">
+            <div class="col-12 col-lg-6">
+                <div class="bg-white shadow-sm border rounded">
+                    <div class="d-flex justify-content-between align-items-center px-2 py-3 border-bottom bg-light">
+                        <div class="small-image border rounded-3 me-2"></div>
+                        <div class="flex-fill" style="line-height:1;">
+                            <small><b>Papa Murphy's Pizza - بيتزا بابا مورفي</b></small><br>
+                            <small class="text-muted" style="font-size:12px;">Papa Murphy's Pizza - بيتزا بابا مورفي</small>
+                        </div>
+                        <div class="ms-2"><small style="font-size:13px;"><b>AED 32</b></small></div>
+                    </div>
+
+                    <div class="d-flex flex-column px-2 py-2 border-bottom">
+                        <div class="mb-2">
+                            <span class="badge rounded bg-opacity-25 bg-success text-success" style="font-weight:500;">Delivered</span>
+                        </div>
+
+                        <div class="">
+                            <div class="progress" style="height: 5px">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex flex-column px-2 py-3 border-bottom">
+                        <?php
+                        for ($i = 0; $i < 4; $i++) {
+                        ?>
+                            <div class="mb-2" style="line-height:1;">
+                                <small class="text-muted" style="font-size:12px;">ITEMS</small><br>
+                                <small style="font-size:13px;font-weight:500;">1 x Half N Half Medium Original</small>
+                            </div>
+
+                            <div class="progress" style="height: 5px">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
+                            </div>
+                        <?php } ?>
+
+                        <div class="mt-1" style="line-height:1;">
+                            <small class="text-muted" style="font-size:12px;">ORDERED ON</small><br>
+                            <small style="font-size:13px;font-weight:500;">18 Oct 2021 at 7:59 PM</small>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center px-2 py-2 bg-light">
+                        <div class="">
+                            <span class="badge bg-light text-dark border me-1">1 <i class="fa fa-star"></i></span>
+                            <span class="badge bg-light text-dark border me-1">2 <i class="fa fa-star"></i></span>
+                            <span class="badge bg-light text-dark border me-1">3 <i class="fa fa-star"></i></span>
+                            <span class="badge bg-light text-dark border me-1">4 <i class="fa fa-star"></i></span>
+                            <span class="badge bg-light text-dark border">5 <i class="fa fa-star"></i></span>
+                        </div>
+
+                        <div class="" style="line-height:1;">
+                            <small>
+                                <i class="fa fa-history"></i>
+                                <span class="ms-1" style="font-size:12px;">Repeat Order</span>
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex-fill row justify-content-center my-5">
+            <div class="col-12 col-lg-6">
+                <div class="bg-white shadow-sm border rounded">
+                    <div class="d-flex justify-content-between align-items-center px-2 py-3 border-bottom bg-light">
+                        <div class="small-image border rounded-3 me-2"></div>
+                        <div class="flex-fill" style="line-height:1;">
+                            <small><b>Papa Murphy's Pizza - بيتزا بابا مورفي</b></small><br>
+                            <small class="text-muted" style="font-size:12px;">Papa Murphy's Pizza - بيتزا بابا مورفي</small>
+                        </div>
+                        <div class="ms-2"><small style="font-size:13px;"><b>AED 32</b></small></div>
+                    </div>
+
+                    <div class="d-flex flex-column px-2 py-2 border-bottom">
+                        <div class="mb-2">
+                            <span class="badge rounded bg-opacity-25 bg-success text-success" style="font-weight:500;">Delivered</span>
+                        </div>
+
+                        <div class="">
+                            <div class="progress" style="height: 5px">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex flex-column px-2 py-3 border-bottom">
+                        <?php
+                        for ($i = 0; $i < 4; $i++) {
+                        ?>
+                            <div class="mb-2" style="line-height:1;">
+                                <small class="text-muted" style="font-size:12px;">ITEMS</small><br>
+                                <small style="font-size:13px;font-weight:500;">1 x Half N Half Medium Original</small>
+                            </div>
+
+                            <div class="progress" style="height: 5px">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
+                            </div>
+                        <?php } ?>
+
+                        <div class="mt-1" style="line-height:1;">
+                            <small class="text-muted" style="font-size:12px;">ORDERED ON</small><br>
+                            <small style="font-size:13px;font-weight:500;">18 Oct 2021 at 7:59 PM</small>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center px-2 py-2 bg-light">
+                        <div class="">
+                            <span class="badge bg-light text-dark border me-1">1 <i class="fa fa-star"></i></span>
+                            <span class="badge bg-light text-dark border me-1">2 <i class="fa fa-star"></i></span>
+                            <span class="badge bg-light text-dark border me-1">3 <i class="fa fa-star"></i></span>
+                            <span class="badge bg-light text-dark border me-1">4 <i class="fa fa-star"></i></span>
+                            <span class="badge bg-light text-dark border">5 <i class="fa fa-star"></i></span>
+                        </div>
+
+                        <div class="" style="line-height:1;">
+                            <small>
+                                <i class="fa fa-history"></i>
+                                <span class="ms-1" style="font-size:12px;">Repeat Order</span>
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <form action="" method="post" id="form">
         <div>
@@ -55,138 +203,13 @@
 
     <div id="status"></div>
 
-    <!-- <section class="">
-        <div class="">
-            <div class="d-flex flex-column d-grid gap-5 m-5">
-                <div class="card shadow-sm rounded-3" style="width: 30rem;">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item py-3">
-                            <div class="d-flex justify-content-between">
-                                <div class="d-flex align-items-center">
-                                    <div class="small-image border rounded-3 flex-shrink-0"></div>
-
-                                    <div class="flex-grow-1 ms-2">
-                                        <div class="fw-bold fs-5 lh-sm">Papa Murphy's Pizza - Papa Murphy's Pizza</div>
-                                        <div class="text-black-50">Al Safa Complex, Al Safa, Dubai</div>
-                                    </div>
-                                </div>
-
-                                <div class="fw-bold fs-5 ms-2">AED32.00</div>
-                            </div>
-                        </li>
-
-                        <li class="list-group-item py-3">
-                            <div class="mb-2">
-                                <span class="badge rounded bg-opacity-25 bg-success text-success fs-6 fw-light">Delivered</span>
-                            </div>
-
-                            <div class="mb-2">
-                                <div class="text-black-50">ITEMS</div>
-                                <div class="fw-bold">1 x Half N Half Medium Original</div>
-                            </div>
-
-                            <div class="mb-2">
-                                <div class="text-black-50">ORDERED ON</div>
-                                <div class="fw-bold">18 Oct 2021 at 7:59 PM</div>
-                            </div>
-                        </li>
-
-                        <li class="list-group-item bg-light py-2">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="">
-                                    <div class="text-danger fs-5 mb-1">Rate order</div>
-                                    <div>
-                                        <button type="button" class="btn btn-sm btn-outline-secondary rounded-3 py-0 fs-6">1 <i class="fa fa-star sm-text-6"></i>
-                                        </button>
-                                        <button type="button" class="btn btn-sm btn-outline-secondary rounded-3 py-0 fs-6">2 <i class="fa fa-star sm-text-6"></i>
-                                        </button>
-                                        <button type="button" class="btn btn-sm btn-outline-secondary rounded-3 py-0 fs-6">3 <i class="fa fa-star sm-text-6"></i>
-                                        </button>
-                                        <button type="button" class="btn btn-sm btn-outline-secondary rounded-3 py-0 fs-6">4 <i class="fa fa-star sm-text-6"></i>
-                                        </button>
-                                        <button type="button" class="btn btn-sm btn-outline-secondary rounded-3 py-0 fs-6">5 <i class="fa fa-star sm-text-6"></i>
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <button class="d-flex align-items-center btn">
-                                    <i class="fa fa-history"></i>
-                                    <span class="ms-1">Repeat Order</span>
-                                </button>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="card shadow-sm rounded-3" style="min-width: 26rem;">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item py-3">
-                            <div class="d-flex justify-content-between">
-                                <div class="d-flex align-items-center">
-                                    <div class="small-image border rounded-3 flex-shrink-0"></div>
-
-                                    <div class="flex-grow-1 ms-2">
-                                        <div class="fw-bold fs-5 lh-sm">Papa Murphy's Pizza - Papa Murphy's Pizza</div>
-                                        <div class="text-black-50">Al Safa Complex, Al Safa, Dubai</div>
-                                    </div>
-                                </div>
-
-                                <div class="fw-bold fs-5 ms-2">AED32.00</div>
-                            </div>
-                        </li>
-
-                        <li class="list-group-item py-3">
-                            <div class="mb-2">
-                                <span class="badge rounded bg-opacity-25 bg-success text-success fs-6 fw-light">Delivered</span>
-                            </div>
-
-                            <div class="mb-2">
-                                <div class="text-black-50">ITEMS</div>
-                                <div class="fw-bold">1 x Half N Half Medium Original</div>
-                            </div>
-
-                            <div class="mb-2">
-                                <div class="text-black-50">ORDERED ON</div>
-                                <div class="fw-bold">18 Oct 2021 at 7:59 PM</div>
-                            </div>
-                        </li>
-
-                        <li class="list-group-item bg-light py-2">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="">
-                                    <div class="text-danger fs-5 mb-1">Rate order</div>
-                                    <div>
-                                        <button type="button" class="btn btn-sm btn-outline-secondary rounded-3 py-0 fs-6">1 <i class="fa fa-star sm-text-6"></i>
-                                        </button>
-                                        <button type="button" class="btn btn-sm btn-outline-secondary rounded-3 py-0 fs-6">2 <i class="fa fa-star sm-text-6"></i>
-                                        </button>
-                                        <button type="button" class="btn btn-sm btn-outline-secondary rounded-3 py-0 fs-6">3 <i class="fa fa-star sm-text-6"></i>
-                                        </button>
-                                        <button type="button" class="btn btn-sm btn-outline-secondary rounded-3 py-0 fs-6">4 <i class="fa fa-star sm-text-6"></i>
-                                        </button>
-                                        <button type="button" class="btn btn-sm btn-outline-secondary rounded-3 py-0 fs-6">5 <i class="fa fa-star sm-text-6"></i>
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <button class="d-flex align-items-center btn">
-                                    <i class="fa fa-history"></i>
-                                    <span class="ms-1">Repeat Order</span>
-                                </button>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section> -->
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-    <script src="./disappear.js"></script>
-    <script src="./save-restaurant.js"></script>
+    <script src="./js/disappear.js"></script>
+    <script src="./js/save-restaurant.js"></script>
+    <script src="./js/save-status.js"></script>
 </body>
 
 </html>

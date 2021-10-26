@@ -7,14 +7,25 @@ $database = new Database();
 $db = $database->getConnection();
 $restaurant = new Restaurant($db);
 
-if (isset($_POST['saveRestaurant']) && isset($_POST['restaurantName']) && isset($_POST['restaurantMeal'])) {
-    $restaurant->setRestaurantName($_POST['restaurantName']);
-    $restaurant->setRestaurantMeal($_POST['restaurantMeal']);
+if (isset($_POST['save_restaurant']) && isset($_POST['restaurant_name'])) {
+    $restaurant->setName($_POST['restaurantName']);
 
-    if ($restaurant->saveRestaurant()) {
-        echo $restaurant->readOne();
+    if ($restaurant->save()) {
+        $response[] = array('success' => true);
+
+        header('Content-Type: application/json');
+
+        return json_encode($response);
+
+        return $response;
     } else {
-        echo "Something went wrong saving your restaurant details in the database";
+        $response[] = array('success' => false);
+
+        header('Content-Type: application/json');
+        
+        return json_encode($response);
+
+        return $response;
     }
 }
 

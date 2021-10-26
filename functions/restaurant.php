@@ -4,10 +4,8 @@ class Restaurant
     private $conn;
     protected $table_name = 'restaurant';
 
-    private $restaurant_owner;
-    private $restaurant_id;
-    private $restaurant_name;
-    private $restaurant_meal;
+    private $id;
+    private $name;
     private $created;
 
     function __construct($db)
@@ -22,60 +20,24 @@ class Restaurant
         echo "</pre>";
     }
 
-    public function setOwner($restaurant_owner): void
+    public function setName($name): void
     {
-        $this->restaurant_owner = $restaurant_owner;
+        $this->name = $name;
     }
 
-    public function getOwner()
+    public function save(): bool
     {
-        return $this->restaurant_owner;
-    }
-
-    public function setId($restaurant_id): void
-    {
-        $this->restaurant_id = $restaurant_id;
-    }
-
-    public function getId()
-    {
-        return $this->restaurant_id;
-    }
-
-    public function setRestaurantName($restaurant_name): void
-    {
-        $this->restaurant_name = $restaurant_name;
-    }
-
-    public function getRestaurantName(): string
-    {
-        return $this->restaurant_name;
-    }
-
-    public function setRestaurantMeal($restaurant_meal): void
-    {
-        $this->restaurant_meal = $restaurant_meal;
-    }
-
-    public function getRestaurantMeal(): string
-    {
-        return $this->restaurant_meal;
-    }
-
-    public function saveRestaurant()
-    {
-        $query = "INSERT INTO " . $this->table_name . " SET restaurant_name = :restaurant_name, restaurant_meal = :restaurant_meal";
+        $query = "INSERT INTO " . $this->table_name . " SET name = :name";
 
         $stmt = $this->conn->prepare($query);
 
-        $this->restaurant_name = htmlspecialchars(strip_tags($this->restaurant_name));
-        $this->restaurant_meal = htmlspecialchars(strip_tags($this->restaurant_meal));
+        $this->name = htmlspecialchars(strip_tags($this->name));
 
-        $stmt->bindParam(":restaurant_name", $this->restaurant_name);
-        $stmt->bindParam(":restaurant_meal", $this->restaurant_meal);
+        $stmt->bindParam(":name", $this->name);
 
         if (!$stmt->execute()) {
             $this->showError($stmt);
+
             return false;
         }
         return true;
@@ -83,11 +45,11 @@ class Restaurant
 
     public function readOne()
     {
-        $query = "SELECT * FROM " . $this->table_name . " WHERE restaurant_name = ? and restaurant_meal = ? LIMIT 0,1";
+        $query = "SELECT * FROM " . $this->table_name . " WHERE name = ? and restaurant_meal = ? LIMIT 0,1";
 
         $stmt = $this->conn->prepare($query);
 
-        $stmt->bindParam(1, $this->restaurant_name);
+        $stmt->bindParam(1, $this->name);
         $stmt->bindParam(2, $this->restaurant_meal);
 
         $stmt->execute();
@@ -95,19 +57,20 @@ class Restaurant
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         $this->restaurant_owner = $row['restaurant_owner'];
         $this->restaurant_id = $row['restaurant_id'];
-        $this->restaurant_name = $row['restaurant_name'];
+        $this->name = $row['name'];
         $this->restaurant_meal = $row['restaurant_meal'];
         $this->created = strtotime($row['created']);
 
         $data[] = array(
             'restaurant_owner' => $row['restaurant_owner'],
             'restaurant_id' => $row['restaurant_id'],
-            'restaurant_name' => $row['restaurant_name'],
+            'name' => $row['name'],
             'restaurant_meal' => $row['restaurant_meal'],
             'created' => strtotime($row['created']),
         );
 
         header('Content-Type: application/json');
+
         return json_encode($data);
     }
 
@@ -149,7 +112,7 @@ class Restaurant
         $data = [];
         $data['restaurant_owner'] = $this->restaurant_owner;
         $data['restaurant_id'] = $this->restaurant_id;
-        $data['restaurant_name'] = $this->restaurant_name;
+        $data['name'] = $this->name;
         $data['restaurant_meal'] = $this->restaurant_meal;
         $data['created'] = strtotime($this->created);
         header('Content-Type: application/json');

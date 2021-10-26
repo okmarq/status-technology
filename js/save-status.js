@@ -26,7 +26,7 @@ $(function () {
 
     $("#viewStatus").click(function (data) {
         // if user has status in db get all,
-        let jqxhr = $.get('functions/status.php', function () {
+        let jqxhr = $.get('functions/status-middleware.php', function () {
             $("#response").html('successfully received');
         }, 'json').done(function (response) {
             // display each status
@@ -164,9 +164,7 @@ $(function () {
         `);
                 $("#progressBar").click();
             }
-        }, 500);
-
-        console.log(progressBar);
+        }, 1);
     });
 });
 

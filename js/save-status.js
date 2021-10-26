@@ -8,26 +8,19 @@ $(function () {
             save_status: true,
         };
 
-        let saveStatus = $.post('functions/save-status.php', formData, function (response) {
+        $.post('functions/save-status.php', formData, function (response) {
 
         }, 'json').done(function (response) {
             if (!response.success) {
-                console.log(response);
-                
+
                 return $("#status-response").html("<span class='text-danger'>submit unsuccessful</span>");
             }
-
-            console.log(response);
 
             return $("#status-response").html("<span class='text-success'>submit successful</span>");
         }).fail(function (error) {
             console.error(error);
 
             return $("#status-response").html("<span class='text-info'>something went wrong, try later</span>");
-        });
-
-        saveStatus.always(function (response) {
-            console.log(response);
         });
     });
 
@@ -165,15 +158,15 @@ $(function () {
 
     let progressBar = 0;
 
-    $("#progressBar").click(function () {
+    $(".progressBar").click(function () {
         setTimeout(function () {
             progressBar++;
 
             if (progressBar <= 100) {
-                $("#progressBar").html(`
-        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="${progressBar}" aria-valuemin="0" aria-valuemax="100" style="width: ${progressBar}%"></div>
-        `);
-                $("#progressBar").click();
+                $(this).html(`<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="${progressBar}" aria-valuemin="0" aria-valuemax="100" style="width: ${progressBar}%"></div>`);
+
+                console.log(progressBar);
+                $(".progressBar").click();
             }
         }, 1);
     });

@@ -62,15 +62,13 @@ class Status
         $stmt->execute();
 
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        $this->status_owner = $row['status_owner'];
-        $this->status_id = $row['status_id'];
+        $this->id = $row['id'];
         $this->status = $row['status'];
         $this->restaurant_id = $row['restaurant_id'];
         $this->created = strtotime($row['created']);
 
-        $data[] = array(
-            'status_owner' => $row['status_owner'],
-            'status_id' => $row['status_id'],
+        $data = array(
+            'id' => $row['id'],
             'status' => $row['status'],
             'restaurant_id' => $row['restaurant_id'],
             'created' => strtotime($row['created']),
@@ -80,13 +78,13 @@ class Status
         return json_encode($data);
     }
 
-    public function readAll()
+    public function readAllStatusById($id)
     {
-        $query = "SELECT * FROM " . $this->table_name . " WHERE status_owner = ?";
+        $query = "SELECT * FROM " . $this->table_name . " WHERE restaurant_id = ?";
 
         $stmt = $this->conn->prepare($query);
 
-        $stmt->bindParam(1, $this->status_owner);
+        $stmt->bindParam(1, $id);
 
         $stmt->execute();
 
@@ -102,25 +100,11 @@ class Status
 
         if (!$stmt->execute()) {
             $this->showError($stmt);
-            $data = [];
-            $data['message'] = 'Unable to delete status';
+            $data = array('message' => 'Unable to delete status');
             header('Content-Type: application/json');
             return json_encode($data);
         }
-        $data = [];
-        $data['message'] = 'Status deleted';
-        header('Content-Type: application/json');
-        return json_encode($data);
-    }
-
-    public function __toString()
-    {
-        $data = [];
-        $data['status_owner'] = $this->status_owner;
-        $data['status_id'] = $this->status_id;
-        $data['status'] = $this->status;
-        $data['restaurant_id'] = $this->restaurant_id;
-        $data['created'] = strtotime($this->created);
+        $data = array('message' => 'Status deleted');
         header('Content-Type: application/json');
         return json_encode($data);
     }

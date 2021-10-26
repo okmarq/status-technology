@@ -33,6 +33,7 @@
     $database = new Database();
     $db = $database->getConnection();
     $restaurant = new Restaurant($db);
+    $stat = new Status($db);
     ?>
 </head>
 
@@ -77,161 +78,104 @@
         <div id="status-response" class="small"></div>
     </form>
 
-    <div class="d-flex flex-wrap">
-        <div class="flex-fill row justify-content-center my-5">
-            <div class="col-12 col-lg-6">
-                <div class="bg-white shadow-sm border rounded">
-                    <div class="d-flex justify-content-between align-items-center px-2 py-3 border-bottom bg-light">
-                        <div class="small-image border rounded-3 me-2"></div>
-                        <div class="flex-fill" style="line-height:1;">
-                            <small><b>Papa Murphy's Pizza - بيتزا بابا مورفي</b></small><br>
-                            <small class="text-muted" style="font-size:12px;">Papa Murphy's Pizza - بيتزا بابا مورفي</small>
-                        </div>
-                        <div class="ms-2"><small style="font-size:13px;"><b>AED 32</b></small></div>
-                    </div>
+    <div class="d-flex flex-wrap my-5">
+        <?php
+        $stmt = $restaurant->readAll();
+        $num = $stmt->rowCount();
 
-                    <div class="d-flex flex-column px-2 py-2 border-bottom">
-                        <div class="mb-2">
-                            <span class="badge rounded bg-opacity-25 bg-success text-success" style="font-weight:500;">Delivered</span>
-                        </div>
+        if ($num > 0) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                extract($row);
+        ?>
+                <div class="row justify-content-center my-1">
+                    <div class="col-12 col-lg-6">
+                        <div class="bg-white shadow-sm border rounded">
+                            <div class="d-flex justify-content-between align-items-center px-2 py-3 border-bottom bg-light">
+                                <div class="small-image border rounded-3 me-2"></div>
 
-                        <div class="">
-                            <div class="progress" style="height: 5px">
-                                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
-                            </div>
-                        </div>
-                    </div>
+                                <div class="flex-fill" style="line-height:1;">
+                                    <small>
 
-                    <div class="d-flex flex-column px-2 py-3 border-bottom">
-                        <?php
-                        for ($i = 0; $i < 4; $i++) {
-                        ?>
-                            <div class="mb-2" style="line-height:1;">
-                                <small class="text-muted" style="font-size:12px;">ITEMS</small><br>
-                                <small style="font-size:13px;font-weight:500;">1 x Half N Half Medium Original</small>
+                                        <?php
+                                        echo "<b id='{$id}'>{$name}</b>";
+                                        ?>
+
+                                    </small><br>
+
+                                    <small class="text-muted" style="font-size:12px;">location will be here</small>
+                                </div>
+
+                                <div class="ms-2">
+                                    <small style="font-size:13px;"><b>AED 32</b></small>
+                                </div>
                             </div>
 
-                            <div class="progress" style="height: 5px">
-                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
+                            <div class="d-flex flex-column px-2 py-2 border-bottom">
+                                <div class="mb-2">
+                                    <span class="badge rounded bg-opacity-25 bg-success text-success" style="font-weight:500;">Delivered</span><br>
+                                </div>
+
+                                <div class="">
+                                    <div class="progress progressBar" style="height: 5px">
+                                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
+                                    </div>
+                                </div>
                             </div>
-                        <?php } ?>
 
-                        <div class="mt-1" style="line-height:1;">
-                            <small class="text-muted" style="font-size:12px;">ORDERED ON</small><br>
-                            <small style="font-size:13px;font-weight:500;">18 Oct 2021 at 7:59 PM</small>
-                        </div>
-                    </div>
+                            <div class="d-flex flex-column px-2 py-3 border-bottom">
+                                <?php
+                                $stmt_2 = $stat->readAllStatusById($id);
+                                $num = $stmt_2->rowCount();
+                                if ($num > 0) {
+                                    while ($status_row = $stmt_2->fetch(PDO::FETCH_ASSOC)) {
+                                        extract($status_row);
+                                ?>
+                                        <div class="mb-2" style="line-height:1;">
+                                            <small class="text-muted" style="font-size:12px;">STATUS</small><br>
 
-                    <div class="d-flex justify-content-between align-items-center px-2 py-2 bg-light">
-                        <div class="">
-                            <span class="badge bg-light text-dark border me-1">1 <i class="fa fa-star"></i></span>
-                            <span class="badge bg-light text-dark border me-1">2 <i class="fa fa-star"></i></span>
-                            <span class="badge bg-light text-dark border me-1">3 <i class="fa fa-star"></i></span>
-                            <span class="badge bg-light text-dark border me-1">4 <i class="fa fa-star"></i></span>
-                            <span class="badge bg-light text-dark border">5 <i class="fa fa-star"></i></span>
-                        </div>
+                                            <?php
+                                            echo "<small style='font-size:13px;font-weight:500;'>{$status}</small>";
+                                            ?>
+                                        </div>
+                                <?php
+                                    }
+                                } else {
+                                    echo "<p class='text-sm text-danger'>no status found</p>";
+                                }
+                                ?>
 
-                        <div class="" style="line-height:1;">
-                            <small>
-                                <i class="fa fa-history"></i>
-                                <span class="ms-1" style="font-size:12px;">Repeat Order</span>
-                            </small>
+                                <div class="mt-1" style="line-height:1;">
+                                    <small class="text-muted" style="font-size:12px;">CREATED</small><br>
+
+                                    <small style="font-size:13px;font-weight:500;">18 Oct 2021 at 7:59 PM</small>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center px-2 py-2 bg-light">
+                                <div class="">
+                                    <span class="badge bg-light text-dark border me-1">1 <i class="fa fa-star"></i></span>
+                                    <span class="badge bg-light text-dark border me-1">2 <i class="fa fa-star"></i></span>
+                                    <span class="badge bg-light text-dark border me-1">3 <i class="fa fa-star"></i></span>
+                                    <span class="badge bg-light text-dark border me-1">4 <i class="fa fa-star"></i></span>
+                                    <span class="badge bg-light text-dark border">5 <i class="fa fa-star"></i></span>
+                                </div>
+                                <div class="" style="line-height:1;">
+                                    <small>
+                                        <i class="fa fa-history"></i>
+                                        <span class="ms-1" style="font-size:12px;">Repeat Order</span>
+                                    </small>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <div class="flex-fill row justify-content-center my-5">
-            <div class="col-12 col-lg-6">
-                <div class="bg-white shadow-sm border rounded">
-                    <div class="d-flex justify-content-between align-items-center px-2 py-3 border-bottom bg-light">
-                        <div class="small-image border rounded-3 me-2"></div>
-                        <div class="flex-fill" style="line-height:1;">
-                            <small><b>Papa Murphy's Pizza - بيتزا بابا مورفي</b></small><br>
-                            <small class="text-muted" style="font-size:12px;">Papa Murphy's Pizza - بيتزا بابا مورفي</small>
-                        </div>
-                        <div class="ms-2"><small style="font-size:13px;"><b>AED 32</b></small></div>
-                    </div>
-
-                    <div class="d-flex flex-column px-2 py-2 border-bottom">
-                        <div class="mb-2">
-                            <span class="badge rounded bg-opacity-25 bg-success text-success" style="font-weight:500;">Delivered</span>
-                        </div>
-
-                        <div class="">
-                            <div class="progress" style="height: 5px">
-                                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="d-flex flex-column px-2 py-3 border-bottom">
-                        <?php
-                        for ($i = 0; $i < 4; $i++) {
-                        ?>
-                            <div class="mb-2" style="line-height:1;">
-                                <small class="text-muted" style="font-size:12px;">ITEMS</small><br>
-                                <small style="font-size:13px;font-weight:500;">1 x Half N Half Medium Original</small>
-                            </div>
-
-                            <div class="progress" style="height: 5px">
-                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
-                            </div>
-                        <?php } ?>
-
-                        <div class="mt-1" style="line-height:1;">
-                            <small class="text-muted" style="font-size:12px;">ORDERED ON</small><br>
-                            <small style="font-size:13px;font-weight:500;">18 Oct 2021 at 7:59 PM</small>
-                        </div>
-                    </div>
-
-                    <div class="d-flex justify-content-between align-items-center px-2 py-2 bg-light">
-                        <div class="">
-                            <span class="badge bg-light text-dark border me-1">1 <i class="fa fa-star"></i></span>
-                            <span class="badge bg-light text-dark border me-1">2 <i class="fa fa-star"></i></span>
-                            <span class="badge bg-light text-dark border me-1">3 <i class="fa fa-star"></i></span>
-                            <span class="badge bg-light text-dark border me-1">4 <i class="fa fa-star"></i></span>
-                            <span class="badge bg-light text-dark border">5 <i class="fa fa-star"></i></span>
-                        </div>
-
-                        <div class="" style="line-height:1;">
-                            <small>
-                                <i class="fa fa-history"></i>
-                                <span class="ms-1" style="font-size:12px;">Repeat Order</span>
-                            </small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <?php
+            }
+        } else {
+            echo "<p class='text-sm text-danger'>no restaurant found</p>";
+        }
+        ?>
     </div>
-
-    <form action="" method="post" id="form">
-        <div>
-            <label for="restaurantName">Restaurant name</label>
-            <input type="text" name="restaurantName" id="restaurantName" required>
-        </div>
-
-        <div>
-            <label for="restaurantMeal">Restaurant meal</label>
-            <input type="text" name="restaurantMeal" id="restaurantMeal" required>
-        </div>
-
-        <button type="submit" class="btn btn-sm btn-outline-success">Add status</button>
-    </form>
-
-    <div id="response"></div>
-
-    <div id="allStatus"></div>
-
-    <button id="viewStatus" type="button" class="btn btn-sm btn-outline-primary">View status</button>
-
-    <div id="traverse"></div>
-
-    <div id="statusView"></div>
-
-    <div id="status"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 

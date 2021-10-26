@@ -66,7 +66,7 @@ class Restaurant
         $this->restaurant_meal = $row['restaurant_meal'];
         $this->created = strtotime($row['created']);
 
-        $data[] = array(
+        $data = array(
             'restaurant_owner' => $row['restaurant_owner'],
             'restaurant_id' => $row['restaurant_id'],
             'name' => $row['name'],
@@ -99,25 +99,11 @@ class Restaurant
 
         if (!$stmt->execute()) {
             $this->showError($stmt);
-            $data = [];
-            $data['message'] = 'Unable to delete status';
+            $data = array('message' => 'Unable to delete status');
             header('Content-Type: application/json');
             return json_encode($data);
         }
-        $data = [];
-        $data['message'] = 'Status deleted';
-        header('Content-Type: application/json');
-        return json_encode($data);
-    }
-
-    public function __toString()
-    {
-        $data = [];
-        $data['restaurant_owner'] = $this->restaurant_owner;
-        $data['restaurant_id'] = $this->restaurant_id;
-        $data['name'] = $this->name;
-        $data['restaurant_meal'] = $this->restaurant_meal;
-        $data['created'] = strtotime($this->created);
+        $data = array('message' => 'Status deleted');
         header('Content-Type: application/json');
         return json_encode($data);
     }

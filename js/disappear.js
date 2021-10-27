@@ -7,13 +7,6 @@ class Status {
     }
 }
 
-// add a status
-// let status_1 = new Status("Papa Murphy's Pizza", "Half N Half Medium Original"),
-//     status_2 = new Status("Tandoori jumction", "Coconut Shrimp Curry Bowl"),
-//     status_3 = new Status("Kailash Parbat", "Masiu Ramen Large Bowl"),
-//     status_4 = new Status("Papa Ichiraku Ochan", "Naruto Ichiraku Ramen Regular"),
-//     status_5 = new Status("Golden Paris Way Restaurant", "Milk of Poppy Clean Cut Opium");
-
 class Node {
     constructor(value) {
         this.value = value;

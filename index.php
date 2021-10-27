@@ -186,6 +186,18 @@
     </div>
 
     <div class="my-5">
+        <div id="loop" class="d-none row justify-content-center">
+            <div class="col-12 col-lg-6">
+                <div class="bg-white shadow-sm border rounded">
+                    <div class="d-flex flex-column px-2 py-3 border-bottom">
+                        <div class="mt-1" style="line-height:1;" id="looping-status"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="my-5">
         <div id="display" class="d-none row justify-content-center">
             <div class="col-12 col-lg-6">
                 <div class="bg-white shadow-sm border rounded">

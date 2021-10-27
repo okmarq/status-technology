@@ -6,36 +6,32 @@ spl_autoload_register(function ($class_name) {
 $database = new Database();
 $db = $database->getConnection();
 $restaurant = new Restaurant($db);
+$status = new Status($db);
 
-$restaurant->setOwner('no one');
 $stmt = $restaurant->readAll();
 $num = $stmt->rowCount();
-if ($num > 0) {
 
+$data = array();
+
+if ($num > 0) {
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         extract($row);
 
-        $data[] = array(
-            'restaurant_owner' => $row['restaurant_owner'],
-            'restaurant_id' => $row['restaurant_id'],
-            'restaurant_name' => $row['restaurant_name'],
-            'restaurant_meal' => $row['restaurant_meal'],
-            'created' => strtotime($row['created']),
-        );
-    }
-    header('Content-Type: application/json');
-    
-    echo json_encode($data);
-}
-// else {
-//     $data[] = array('response' => 'no status', 'status' => 404);
-// }
+        $stmt_2 = $status->readAllStatusById($id);
+        $num_2 = $stmt_2->rowCount();
 
-
-if (isset($_POST['deleteStatus']) && isset($_POST['restaurantId'])) {
-    if ($restaurant->deleteStatus($_POST['restaurantId'])) {
-        echo "Status deleted";
-    } else {
-        echo "Unable to delete status";
+        if ($num_2 > 0) {
+            while ($status_row = $stmt_2->fetch(PDO::FETCH_ASSOC)) {
+                $data[] = array(
+                    'status' => $status_row['status'],
+                    'id' => $status_row['id'],
+                    'restaurant_id' => $status_row['restaurant_id'],
+                    'created' => strtotime($status_row['created']),
+                );
+            }
+        }
     }
 }
+
+header('Content-Type: application/json');
+echo json_encode($data);

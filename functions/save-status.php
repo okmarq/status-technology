@@ -17,19 +17,41 @@ if (isset($_POST['save_status']) && isset($_POST['restaurant_id']) && isset($_PO
         header('Content-Type: application/json');
 
         echo json_encode($response);
+
+        return;
     } else {
         $response = array('success' => false);
 
         header('Content-Type: application/json');
-        
+
         echo json_encode($response);
+
+        return;
     }
 }
 
 if (isset($_POST['delete_status']) && isset($_POST['status_id'])) {
     if ($status->deleteStatus($_POST['status_id'])) {
-        echo "Status deleted";
+        $response = array(
+            'success' => true,
+            'message' => 'Status deleted'
+        );
+
+        header('Content-Type: application/json');
+
+        echo json_encode($response);
+
+        return;
     } else {
-        echo "Unable to delete status";
+        $response = array(
+            'success' => false,
+            'message' => 'Unable to delete status'
+        );
+
+        header('Content-Type: application/json');
+
+        echo json_encode($response);
+
+        return;
     }
 }

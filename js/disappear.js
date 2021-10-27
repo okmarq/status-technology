@@ -1,7 +1,9 @@
 class Status {
-    constructor(restaurant_name, restaurant_meal) {
-        this.restaurant_name = restaurant_name;
-        this.restaurant_meal = restaurant_meal;
+    constructor(id, restaurant_id, status, created) {
+        this.id = id;
+        this.restaurant_id = restaurant_id;
+        this.status = status;
+        this.created = created;
     }
 }
 

@@ -91,21 +91,29 @@ class Status
         return $stmt;
     }
 
-    public function deleteStatus($status_id): bool
+    public function deleteStatus($id)
     {
-        $query = "DELETE FROM " . $this->table_name . " WHERE status_id = ?";
+        $query = "DELETE FROM " . $this->table_name . " WHERE id = ?";
 
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(1, $status_id);
+
+        $stmt->bindParam(1, $id);
 
         if (!$stmt->execute()) {
-            $this->showError($stmt);
-            $data = array('message' => 'Unable to delete status');
+            $data = array(
+                'error' => $this->showError($stmt),
+                'message' => 'Unable to delete status'
+            );
+
             header('Content-Type: application/json');
+
             return json_encode($data);
         }
+        
         $data = array('message' => 'Status deleted');
+
         header('Content-Type: application/json');
+
         return json_encode($data);
     }
 }

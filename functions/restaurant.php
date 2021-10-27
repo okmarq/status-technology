@@ -90,21 +90,29 @@ class Restaurant
         return $stmt;
     }
 
-    public function deleteStatus($restaurant_id): bool
+    public function deleteStatus($id)
     {
-        $query = "DELETE FROM " . $this->table_name . " WHERE restaurant_id = ?";
+        $query = "DELETE FROM " . $this->table_name . " WHERE id = ?";
 
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(1, $restaurant_id);
+
+        $stmt->bindParam(1, $id);
 
         if (!$stmt->execute()) {
-            $this->showError($stmt);
-            $data = array('message' => 'Unable to delete status');
+            $data = array(
+                'error' => $this->showError($stmt),
+                'message' => 'Unable to delete restaurant'
+            );
+
             header('Content-Type: application/json');
+
             return json_encode($data);
         }
-        $data = array('message' => 'Status deleted');
+        
+        $data = array('message' => 'Restaurant deleted');
+
         header('Content-Type: application/json');
+
         return json_encode($data);
     }
 }

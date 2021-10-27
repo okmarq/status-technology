@@ -78,7 +78,7 @@
         <div id="status-response" class="small"></div>
     </form>
 
-    <div class="d-flex flex-wrap my-5">
+    <!-- <div class="d-flex flex-wrap my-5">
         <?php
         $stmt = $restaurant->readAll();
         $num = $stmt->rowCount();
@@ -125,8 +125,8 @@
                             <div class="d-flex flex-column px-2 py-3 border-bottom">
                                 <?php
                                 $stmt_2 = $stat->readAllStatusById($id);
-                                $num = $stmt_2->rowCount();
-                                if ($num > 0) {
+                                $num_2 = $stmt_2->rowCount();
+                                if ($num_2 > 0) {
                                     while ($status_row = $stmt_2->fetch(PDO::FETCH_ASSOC)) {
                                         extract($status_row);
                                 ?>
@@ -175,6 +175,26 @@
             echo "<p class='text-sm text-danger'>no restaurant found</p>";
         }
         ?>
+    </div> -->
+
+    <div class="my-5 d-none">
+        <button class="btn btn-sm btn-outline-info" id="get-status">Get Status</button>
+    </div>
+
+    <div class="my-5">
+        <button class="btn btn-sm btn-outline-info" id="show-status">Show Status</button>
+    </div>
+
+    <div class="my-5">
+        <div id="display" class="d-none row justify-content-center">
+            <div class="col-12 col-lg-6">
+                <div class="bg-white shadow-sm border rounded">
+                    <div class="d-flex flex-column px-2 py-3 border-bottom">
+                        <div class="mt-1" style="line-height:1;" id="display-status"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
@@ -184,6 +204,7 @@
     <script src="./js/disappear.js"></script>
     <script src="./js/save-restaurant.js"></script>
     <script src="./js/save-status.js"></script>
+    <script src="./js/get-status.js" defer></script>
 </body>
 
 </html>

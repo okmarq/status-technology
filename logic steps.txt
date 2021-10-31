@@ -1,0 +1,21 @@
+User Side
+- user will be able to see the status
+- user will be able to interact with the status
+- status moves behind after user clicks (next step)
+- status is displayed for 30 seconds (optional) (next step)
+- status will not be visible to users after 48 hours (MySQL) (skip step)
+
+Note: we'll be using WhatsApp status technique where the image comes in from the side when the status is clicked
+Note: our pop over will also have a close button
+
+
+
+Restaurant Side
+- user will be able to add a status (image - any size image) [a]
+- user will be able to see the added status at the bottom of the page
+ - a. status title (optional)
+ - a. status image
+ 
+Create table
+status
+- status_id, status_title, status_img, restaurant_id, status_token, date_string, upload_date
